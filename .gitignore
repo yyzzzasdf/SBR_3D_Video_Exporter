@@ -1,8 +1,8 @@
 __pycache__/
 *.py[cod]
-.pytest_cache/
 .venv/
-!reference/**/*.mp4
-!reference/**/*.png
-outputs/*
-!outputs/README.md
+output/*
+!output/sweep_x.mp4
+!output/sweep_y.mp4
+!output/sweep_z.mp4
+!output/coverage.png

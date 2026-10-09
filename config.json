@@ -1,0 +1,14 @@
+{
+  "input_dir": "data",
+  "output_dir": "output",
+  "axes": ["x", "y", "z"],
+  "fps_x": 10, "fps_y": 10, "fps_z": 3,
+  "frames_x": null, "frames_y": null, "frames_z": null,
+  "width": 1280, "height": 960,
+  "elevation": 28.0, "azimuth": -60.0, "z_scale": 1.0, "zoom": 1.0,
+  "dyn_range": 70.0, "vmin": null, "vmax": null,
+  "scene_opacity": 0.35, "slice_opacity": 1.0,
+  "marker_radius": 4.5, "ground_z": 0.0,
+  "cmap": "turbo", "scalar_label": "Power (dBW)", "coordinate_unit": "m",
+  "coverage_z": null
+}

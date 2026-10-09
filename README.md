@@ -1,115 +1,114 @@
-# 三维功率数据视频导出工具
+# 三维数据视频导出工具
 
-将已有的三维功率数据导出为 x、y、z 三个方向的切片扫描视频，支持相干功率和非相干功率。可叠加建筑、发射点和建筑内部透明区域，并生成预览图。
+读取一份三维数值数据，可选叠加场景，导出 x、y、z 三个方向的切片扫描视频和一张水平切片覆盖图。直接绘制输入数值，色条标题和单位由使用者设置。
 
-整个 `video_export_tool` 目录可以直接复制到其他电脑使用。运行时只依赖本目录和 `requirements.txt` 中的 Python 包；输入功率数据由使用者提供，工具不重新执行 SBR 仿真。
+随包 Manhattan 数据来自射线追踪仿真；`output/` 中的三个视频和覆盖图由 `data/` 中的数据生成。
 
-## 安装与第一次运行
+## 安装与运行
 
-已验证环境为 Windows 64 位、Python 3.11.9。FFmpeg 随 `imageio-ffmpeg` 安装，无需单独配置。
+建议使用 Python 3.11。已验证 Windows、Python 3.11 的实际导出；FFmpeg 随依赖安装。
 
-打开 PowerShell，进入本工具目录。新电脑可以创建一个环境并安装依赖：
+在工具目录打开终端，运行：
 
 ```powershell
 python -m venv .venv
-& .\.venv\Scripts\python.exe -X utf8 -m pip install -r requirements.txt
-& .\.venv\Scripts\python.exe render_video.py --config configs/quick.json
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe render_video.py
 ```
 
-下文的 `python` 均指安装了本工具依赖的环境解释器。没有激活环境时，将它替换为 `.\.venv\Scripts\python.exe`；当前 SBR 电脑则使用 `D:\python_env\SBR\python.exe`。
+已有依赖环境时，直接运行 `python render_video.py`。
 
-第一次运行使用随包的合成样例，输出位于 `outputs/synthetic/`：六个 MP4、六张预览图和一份 `run.json`。重复运行请换一个输出目录，或加 `--overwrite` 覆盖上次生成的文件。
+默认生成 `output/sweep_x.mp4`、`sweep_y.mp4`、`sweep_z.mp4` 和 `coverage.png`。重复运行会替换对应结果，开始替换前会先完成全部渲染。视频保持固定相机、统一色条，沿各轴扫描；覆盖图为俯视的 x-y 切片，标题标明实际高度。
 
-当前已经部署 SBR 环境的电脑无需重复安装。进入本工具目录后运行：
+## 目录与替换数据
+
+```text
+data/                输入：power_cube.npz，另可提供 scene.npz
+output/              导出：三个视频和一张覆盖图
+video_export/        代码：读取、校验、配置与渲染
+render_video.py      运行入口
+config.json          配置
+requirements.txt     Python 依赖
+README.md            使用说明
+```
+
+用自己的 `power_cube.npz` 替换 `data/` 中的文件即可。有对应场景时一起替换 `scene.npz`，没有场景时删除它，或使用 `--no-scene`。工具不会自动判断场景是否属于当前数据。
 
 ```powershell
-& D:\python_env\SBR\python.exe render_video.py --config configs/quick.json
+python render_video.py --validate-only
+python render_video.py --no-scene
+python render_video.py --data "D:\my_data" --out "D:\my_videos"
 ```
 
-使用其他系统时，可以用环境内的 `python` 执行相同脚本；其他系统的图形驱动和离屏渲染能力未在本次验证中测试。
+配置中的 `input_dir`、`output_dir` 相对于配置文件所在目录；命令行 `--data`、`--out` 和 `--config` 相对于执行命令的当前目录。默认配置和输入输出位置相对于工具目录，因此也可以从其他目录执行入口。
 
-## 随包数据与视频
+## 输入格式
 
-| 目录 | 内容 | 用途 |
+`power_cube.npz` 使用普通数值数组，字段如下：
+
+| 字段 | 形状 | 含义 |
 |---|---|---|
-| `examples/synthetic/` | 8×10×6 的合成场，含一个简单建筑 | 快速检查环境和演示输入格式，可用脚本重新生成 |
-| `examples/manhattan/` | 新计算的 40×55×9 Manhattan 功率场，间隔 20×20×10 米 | 用真实场景测试导出流程 |
-| `reference/synthetic/` | 本工具生成的小样例视频、预览和运行记录 | 对照运行效果 |
-| `reference/manhattan_coarse/` | 本工具生成的 Manhattan 小样例视频、预览和运行记录 | 对照真实场景的导出效果 |
-| `reference/full_resolution/` | 1920×1440 分辨率的短视频与预览 | 查看默认分辨率的输出 |
-| `reference/manhattan/` | 2026 年 7 月 16 日原始运行的六个视频、对比图及元数据副本 | 查看历史 1 米结果的外观 |
-| `outputs/` | 使用者生成的结果 | 与随包参考文件分开保存 |
+| `x_centers` | `(Nx,)` | x 方向采样坐标 |
+| `y_centers` | `(Ny,)` | y 方向采样坐标 |
+| `z_centers` | `(Nz,)` | z 方向采样坐标，z 为竖直方向 |
+| `values` | `(Nx, Ny, Nz)` | 要显示的三维数值 |
+| `inside`，可选 | `(Nx, Ny, Nz)` | 布尔掩码，`True` 区域透明 |
 
-Manhattan 小样例在 2026 年 10 月 9 日使用主项目的 ray 路线新计算：20,000 条发射射线、最多五次反射、28 GHz。它用于演示数据到视频的流程，精度和规模与历史 1 米 ray-d 结果不同。历史视频对应的原始 1 米功率立方体不在本包中，不能用小样例逐帧复现它。
+坐标须有限、严格递增，每轴至少两个点，支持非等距坐标。`values[ix, iy, iz]` 对应三个坐标数组中的同位置元素。缺失值用 `NaN`，显示为透明；不能使用无穷值。至少需要一个未被掩码遮挡的有限数值。若显示对数数值，请在制作输入时完成转换，工具不会自动取对数或更改单位。
 
-运行真实场景小样例：
+最小输入示例：
 
-```powershell
-python render_video.py --data examples/manhattan --config configs/quick.json --out outputs/manhattan
+```python
+import numpy as np
+from pathlib import Path
+
+Path("data").mkdir(exist_ok=True)
+x = np.array([0., 10., 20.])
+y = np.array([0., 10., 20., 30.])
+z = np.array([5., 15., 25.])
+values = np.full((len(x), len(y), len(z)), -80., dtype=np.float32)
+np.savez_compressed("data/power_cube.npz",
+                    x_centers=x, y_centers=y, z_centers=z, values=values)
 ```
 
-## 使用自己的数据
+可选的 `scene.npz` 使用同一坐标系和坐标单位：
 
-准备一个目录，放入 `power_cube.npz` 和 `metadata.json`。需要叠加建筑时放入 `scene.npz`；需要挖空建筑内部时再放入 `inside_mask.npz`。
+| 字段 | 形状 | 含义 |
+|---|---|---|
+| `vertices` | `(N, 3)` | 几何顶点坐标 |
+| `faces` | 一维整数数组 | 多边形连接：依次存放顶点数、各顶点索引 |
+| `marker`，可选 | `(3,)` | 红色标记点坐标 |
 
-```powershell
-python render_video.py --data "D:\my_data\case1" --validate-only
-python render_video.py --data "D:\my_data\case1" --preview-only --out outputs/case1_preview
-python render_video.py --data "D:\my_data\case1" --out outputs/case1_video
-```
+例如两个三角形的 `faces` 为 `[3, 0, 1, 2, 3, 0, 2, 3]`，索引从 0 开始。NPZ 不支持 Python 对象数组。几何不会自动生成内部掩码；需要挖空时提供 `inside`。
 
-也可以直接指定文件：
+## 配置与常用参数
 
-```powershell
-python render_video.py --cube "D:\my_data\cube.npz" --metadata "D:\my_data\metadata.json" --scene "D:\my_data\scene.npz" --out outputs/case1_video
-```
-
-数组的轴顺序为 `(Nx, Ny, Nz)`，坐标必须严格递增。每个方向至少需要两个体素中心。未覆盖功率使用 `NaN`，建筑内部由布尔掩码表示。详细字段、单位和数据制作示例见 [输入格式](docs/input_format.md)。
-
-## 调整画面与视频
-
-默认参数在 `configs/default.json`，低分辨率快速验证参数在 `configs/quick.json`。配置文件只需写要改变的字段；命令行参数优先于配置文件。
+修改 `config.json` 即可调整画面，命令行参数优先。例如：
 
 ```powershell
-python render_video.py --data examples/manhattan --axes z --quantities incoherent --frames-z 9 --fps-z 6 --width 1280 --height 960 --elevation 35 --azimuth -45 --zoom 1.0 --dyn-range 60 --out outputs/custom
+python render_video.py --axes z --fps-z 2 --width 1920 --height 1440
+python render_video.py --coverage-only --coverage-z 15
+python render_video.py --scalar-label "Temperature (C)" --dyn-range 30
 ```
 
-默认按输入的实际单位标注色条。接收功率使用 dBW；输入本身是路径增益时使用 dB。要将接收功率显示为路径增益，请在元数据填写 `tx_power_w`，并加 `--display path_gain`。完整参数表、帧数与时长关系见 [参数说明](docs/parameters.md)。
+| 配置字段 | 默认配置 | 作用 |
+|---|---|---|
+| `input_dir`、`output_dir` | `data`、`output` | 输入和输出目录 |
+| `axes` | `["x", "y", "z"]` | 扫描方向；只替换本次选中的视频 |
+| `fps_x`、`fps_y`、`fps_z` | 10、10、3 | 每秒帧数 |
+| `frames_x`、`frames_y`、`frames_z` | `null` | 各方向抽样帧数；`null` 使用全部切片 |
+| `width`、`height` | 1280、960 | 输出像素尺寸，至少 320×240，须为 16 的倍数 |
+| `coverage_z` | `null` | 覆盖图高度；`null` 使用最低层，否则取最近的现有层 |
+| `scalar_label` | `Power (dBW)` | 色条标题，换数据时按实际含义修改 |
+| `coordinate_unit` | `m` | 坐标单位标签，不转换坐标 |
+| `vmin`、`vmax` | `null` | 色条上下限；默认上限为未被掩码遮挡的有限最大值 |
+| `dyn_range` | 70 | 默认色条下限为上限减去该值，使用输入数值的单位 |
+| `cmap` | `turbo` | 颜色映射 |
+| `elevation`、`azimuth` | 28、-60 | 视频相机俯仰角和水平角，度 |
+| `zoom`、`z_scale` | 1、1 | 相机缩放、竖直显示比例；数值不变 |
+| `scene_opacity`、`slice_opacity` | 0.35、1 | 场景、数据切片透明度 |
+| `marker_radius`、`ground_z` | 4.5、0 | 标记点半径和视频地面高度，使用坐标单位 |
 
-## 数据转换与测试
+覆盖图高度须位于数据的 z 范围内，标题显示实际选中的层。视频抽样包含首尾切片；单帧取首片；帧数最多为该轴层数，不通过复制帧延长视频。时长约为帧数除以帧率。Manhattan 数据尺寸为 40×55×9，默认三个视频分别为 4、5.5、3 秒；覆盖图位于 5 米层。
 
-重新生成合成数据：
-
-```powershell
-python scripts/generate_synthetic.py --out outputs/new_synthetic_data
-```
-
-旧 My_SBR 的 `scene_overlay.npz` 使用 object 数组。只对可信的旧文件运行转换器，将它转换为本工具的纯数值 `scene.npz`：
-
-```powershell
-python scripts/convert_legacy_overlay.py "D:\old_data\scene_overlay.npz" "D:\new_data\scene.npz"
-```
-
-旧功率 NPZ 里的 `P_coherent_dB`、`P_incoherent_dB`、`x_centers`、`y_centers`、`z_centers` 可直接使用；补上元数据即可，不需要把主项目的 `.pkl` 缓存或计算代码交给使用者。
-
-运行工具自身的输入校验和实际 MP4 渲染测试：
-
-```powershell
-python -X utf8 -m pip install -r requirements-dev.txt
-python -m pytest -c pytest.ini -q -p no:cacheprovider
-```
-
-验证结果见 [验证记录](docs/validation.json)，完整验证环境版本见 [环境记录](docs/environment-tested.txt)，源码与数据来源见 [来源说明](docs/provenance.md)。
-
-## 文件组织
-
-`render_video.py` 是入口；`src/video_export/` 保存读取、校验、配置、渲染代码；`configs/` 保存参数；`examples/` 保存输入；`reference/` 保存随包参考结果；`outputs/` 保存新结果；`scripts/` 保存数据辅助工具；`tests/` 保存验证；`docs/` 保存格式、参数和来源说明。
-
-## 常见问题
-
-- **输出目录已存在结果**：使用新的 `--out`，或明确加 `--overwrite`。
-- **画面边缘被裁掉**：降低 `--zoom`，默认 1.0 会按完整场景贴合相机。
-- **建筑内仍有颜色**：检查是否提供了与功率网格坐标一致的 `inside_mask.npz`。
-- **视频很短**：抽样帧数最多等于该轴的体素数，不会通过复制帧延长时长；降低帧率可让扫描更慢。
-- **加载全城数据占用内存较多**：NPZ 会整体解压为数组。两个 74M 体素的 float32 功率场约占 592 MB，另外还需要掩码和渲染缓冲；只导出一种功率可以减少加载量。
-- **图形驱动或离屏渲染失败**：先用 `--validate-only` 检查数据，再用快速配置生成单方向预览；安装或更新图形驱动后重试。数据校验通过不等于当前机器已经具备渲染能力。
+所有配置字段均有内置默认值，自定义配置可只写需要改变的项。数值和坐标标签由使用者负责；三个视频和覆盖图共用一个色条范围。图形驱动或离屏渲染失败时，先用 `--validate-only` 检查输入，再检查当前电脑的图形驱动。

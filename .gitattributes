@@ -1,5 +1,4 @@
-# Preserve bytes so package manifest hashes survive checkout on any platform.
-* -text
+* text=auto eol=lf
 *.npz binary
 *.png binary
 *.mp4 binary
