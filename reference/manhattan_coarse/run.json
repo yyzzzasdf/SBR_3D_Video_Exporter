@@ -1,0 +1,270 @@
+{
+  "status": "complete",
+  "started_utc": "2026-10-09T03:24:41.366468+00:00",
+  "command": [
+    "render_video.py",
+    "--data",
+    "examples/manhattan",
+    "--config",
+    "configs/quick.json",
+    "--out",
+    "outputs/manhattan_coarse"
+  ],
+  "config": {
+    "axes": [
+      "z",
+      "x",
+      "y"
+    ],
+    "quantities": [
+      "coherent",
+      "incoherent"
+    ],
+    "fps_x": 8,
+    "fps_y": 8,
+    "fps_z": 8,
+    "frames_x": 8,
+    "frames_y": 8,
+    "frames_z": 8,
+    "width": 640,
+    "height": 480,
+    "elevation": 28.0,
+    "azimuth": -60.0,
+    "z_scale": 1.0,
+    "zoom": 1.0,
+    "dyn_range": 70.0,
+    "vmin": null,
+    "vmax": null,
+    "building_opacity": 0.35,
+    "slice_opacity": 1.0,
+    "tx_radius": 4.5,
+    "ground_z": 0.0,
+    "cmap": "turbo",
+    "display": "native",
+    "preview": true
+  },
+  "metadata": {
+    "schema_version": 1,
+    "coordinate_unit": "m",
+    "axis_order": [
+      "x",
+      "y",
+      "z"
+    ],
+    "value_kind": "received_power_dbw",
+    "tx_power_w": 1.0,
+    "dataset": "manhattan_coarse_20261009",
+    "generated_on": "2026-10-09 Asia/Singapore",
+    "source": "New SBR ray-route calculation using data/processed/manhattan.pkl; not the historical 1m dataset",
+    "source_commit": "ffd4193baee7cb96a2da220473e33b1326610d11",
+    "scene_sha256": "8577ffc919c931cb934a159ed3532262b87cb6625811f5cfc5c4f5fd78acaf33",
+    "shape": [
+      40,
+      55,
+      9
+    ],
+    "spacing_m": [
+      20,
+      20,
+      10
+    ],
+    "num_rays": 20000,
+    "max_reflections": 5,
+    "frequency_hz": 28000000000.0,
+    "tx_m": [
+      -80.0,
+      80.0,
+      10.0
+    ],
+    "covered_cells": 8974,
+    "validation": {
+      "ray_in_own_rate": 1.0,
+      "stored_rate": 1.0
+    }
+  },
+  "inputs": [
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\manhattan\\power_cube.npz",
+      "sha256": "423e6b631796e6ae96b9913e6c84df854286fa8c0a5dd257e072df04e300f3e5"
+    },
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\manhattan\\metadata.json",
+      "sha256": "61ce2f3c8a68de8fc806d7f8f1de0f7c45fbc918a233de0501eb27dd6ce2c8e6"
+    },
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\manhattan\\scene.npz",
+      "sha256": "9d8592398c978fb0cccec5eeb94766df4f8a8034d62020f83199a973ecca145c"
+    },
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\manhattan\\inside_mask.npz",
+      "sha256": "add86a3ab724b27fd3cd8a9d76a48d1161bef980e0b915a9a0b91e68d7542062"
+    }
+  ],
+  "versions": {
+    "numpy": "1.26.4",
+    "pyvista": "0.49.0",
+    "vtk": "9.7.1",
+    "imageio": "2.38.1",
+    "imageio-ffmpeg": "0.6.0"
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "outputs": [
+    {
+      "file": "preview3d_z_coherent.png",
+      "kind": "preview",
+      "slice_index": 4,
+      "bytes": 67539
+    },
+    {
+      "file": "sweep3d_z_coherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vmin": -152.43453979492188,
+      "vmax": -82.43453979492188,
+      "label": "Received Power (dBW)",
+      "bytes": 168135
+    },
+    {
+      "file": "preview3d_x_coherent.png",
+      "kind": "preview",
+      "slice_index": 15,
+      "bytes": 27363
+    },
+    {
+      "file": "sweep3d_x_coherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        6,
+        11,
+        17,
+        22,
+        28,
+        33,
+        39
+      ],
+      "vmin": -152.43453979492188,
+      "vmax": -82.43453979492188,
+      "label": "Received Power (dBW)",
+      "bytes": 51453
+    },
+    {
+      "file": "preview3d_y_coherent.png",
+      "kind": "preview",
+      "slice_index": 31,
+      "bytes": 24517
+    },
+    {
+      "file": "sweep3d_y_coherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        8,
+        15,
+        23,
+        31,
+        39,
+        46,
+        54
+      ],
+      "vmin": -152.43453979492188,
+      "vmax": -82.43453979492188,
+      "label": "Received Power (dBW)",
+      "bytes": 49164
+    },
+    {
+      "file": "preview3d_z_incoherent.png",
+      "kind": "preview",
+      "slice_index": 4,
+      "bytes": 62150
+    },
+    {
+      "file": "sweep3d_z_incoherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8
+      ],
+      "vmin": -152.07955169677734,
+      "vmax": -82.07955169677734,
+      "label": "Received Power (dBW)",
+      "bytes": 147471
+    },
+    {
+      "file": "preview3d_x_incoherent.png",
+      "kind": "preview",
+      "slice_index": 15,
+      "bytes": 25781
+    },
+    {
+      "file": "sweep3d_x_incoherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        6,
+        11,
+        17,
+        22,
+        28,
+        33,
+        39
+      ],
+      "vmin": -152.07955169677734,
+      "vmax": -82.07955169677734,
+      "label": "Received Power (dBW)",
+      "bytes": 49449
+    },
+    {
+      "file": "preview3d_y_incoherent.png",
+      "kind": "preview",
+      "slice_index": 31,
+      "bytes": 23591
+    },
+    {
+      "file": "sweep3d_y_incoherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        8,
+        15,
+        23,
+        31,
+        39,
+        46,
+        54
+      ],
+      "vmin": -152.07955169677734,
+      "vmax": -82.07955169677734,
+      "label": "Received Power (dBW)",
+      "bytes": 47382
+    }
+  ],
+  "finished_utc": "2026-10-09T03:24:44.194965+00:00"
+}

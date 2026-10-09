@@ -1,0 +1,5 @@
+numpy==1.26.4
+pyvista==0.49.0
+vtk==9.7.1
+imageio==2.38.1
+imageio-ffmpeg==0.6.0

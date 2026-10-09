@@ -1,0 +1,243 @@
+{
+  "status": "complete",
+  "started_utc": "2026-10-09T03:24:37.961822+00:00",
+  "command": [
+    "render_video.py",
+    "--config",
+    "configs/quick.json",
+    "--out",
+    "outputs/synthetic"
+  ],
+  "config": {
+    "axes": [
+      "z",
+      "x",
+      "y"
+    ],
+    "quantities": [
+      "coherent",
+      "incoherent"
+    ],
+    "fps_x": 8,
+    "fps_y": 8,
+    "fps_z": 8,
+    "frames_x": 8,
+    "frames_y": 8,
+    "frames_z": 8,
+    "width": 640,
+    "height": 480,
+    "elevation": 28.0,
+    "azimuth": -60.0,
+    "z_scale": 1.0,
+    "zoom": 1.0,
+    "dyn_range": 70.0,
+    "vmin": null,
+    "vmax": null,
+    "building_opacity": 0.35,
+    "slice_opacity": 1.0,
+    "tx_radius": 4.5,
+    "ground_z": 0.0,
+    "cmap": "turbo",
+    "display": "native",
+    "preview": true
+  },
+  "metadata": {
+    "schema_version": 1,
+    "coordinate_unit": "m",
+    "axis_order": [
+      "x",
+      "y",
+      "z"
+    ],
+    "value_kind": "received_power_dbw",
+    "tx_power_w": 1.0,
+    "source": "Analytic synthetic field for renderer testing; not a radio simulation",
+    "dataset": "synthetic",
+    "shape": [
+      8,
+      10,
+      6
+    ]
+  },
+  "inputs": [
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\synthetic\\power_cube.npz",
+      "sha256": "9f5d7f1a89c07800d6759c9f09c89d9b51f4d7077f7ad522e485870da916241a"
+    },
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\synthetic\\metadata.json",
+      "sha256": "2af1cc539be3ed0dae75dc84d0f22eecff82c835d7d5dfc74ec8a9c276951593"
+    },
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\synthetic\\scene.npz",
+      "sha256": "98f963088d589ec7a7162851d33bf9d188468436d5f11cef43c84654075fcc69"
+    },
+    {
+      "path": "D:\\MY_programes\\SBR\\tools\\plotting_3d\\video_export_tool\\examples\\synthetic\\inside_mask.npz",
+      "sha256": "b58ec08cc6f4e47b4b13a2c3ea72334cca809208202f0b9501d741216bc52ad2"
+    }
+  ],
+  "versions": {
+    "numpy": "1.26.4",
+    "pyvista": "0.49.0",
+    "vtk": "9.7.1",
+    "imageio": "2.38.1",
+    "imageio-ffmpeg": "0.6.0"
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "outputs": [
+    {
+      "file": "preview3d_z_coherent.png",
+      "kind": "preview",
+      "slice_index": 3,
+      "bytes": 22799
+    },
+    {
+      "file": "sweep3d_z_coherent.mp4",
+      "kind": "video",
+      "frames": 6,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "vmin": -123.67209243774414,
+      "vmax": -53.67209243774414,
+      "label": "Received Power (dBW)",
+      "bytes": 62227
+    },
+    {
+      "file": "preview3d_x_coherent.png",
+      "kind": "preview",
+      "slice_index": 6,
+      "bytes": 17127
+    },
+    {
+      "file": "sweep3d_x_coherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vmin": -123.67209243774414,
+      "vmax": -53.67209243774414,
+      "label": "Received Power (dBW)",
+      "bytes": 37794
+    },
+    {
+      "file": "preview3d_y_coherent.png",
+      "kind": "preview",
+      "slice_index": 7,
+      "bytes": 18378
+    },
+    {
+      "file": "sweep3d_y_coherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ],
+      "vmin": -123.67209243774414,
+      "vmax": -53.67209243774414,
+      "label": "Received Power (dBW)",
+      "bytes": 43484
+    },
+    {
+      "file": "preview3d_z_incoherent.png",
+      "kind": "preview",
+      "slice_index": 3,
+      "bytes": 19641
+    },
+    {
+      "file": "sweep3d_z_incoherent.mp4",
+      "kind": "video",
+      "frames": 6,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "vmin": -126.09111404418945,
+      "vmax": -56.09111404418945,
+      "label": "Received Power (dBW)",
+      "bytes": 56253
+    },
+    {
+      "file": "preview3d_x_incoherent.png",
+      "kind": "preview",
+      "slice_index": 6,
+      "bytes": 16764
+    },
+    {
+      "file": "sweep3d_x_incoherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "vmin": -126.09111404418945,
+      "vmax": -56.09111404418945,
+      "label": "Received Power (dBW)",
+      "bytes": 38836
+    },
+    {
+      "file": "preview3d_y_incoherent.png",
+      "kind": "preview",
+      "slice_index": 7,
+      "bytes": 17428
+    },
+    {
+      "file": "sweep3d_y_incoherent.mp4",
+      "kind": "video",
+      "frames": 8,
+      "fps": 8,
+      "slice_indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ],
+      "vmin": -126.09111404418945,
+      "vmax": -56.09111404418945,
+      "label": "Received Power (dBW)",
+      "bytes": 40188
+    }
+  ],
+  "finished_utc": "2026-10-09T03:24:40.746581+00:00"
+}

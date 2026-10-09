@@ -1,0 +1,5 @@
+# Preserve bytes so package manifest hashes survive checkout on any platform.
+* -text
+*.npz binary
+*.png binary
+*.mp4 binary

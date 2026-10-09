@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "coordinate_unit": "m",
+  "axis_order": [
+    "x",
+    "y",
+    "z"
+  ],
+  "value_kind": "received_power_dbw",
+  "tx_power_w": 1.0,
+  "dataset": "manhattan_coarse_20261009",
+  "generated_on": "2026-10-09 Asia/Singapore",
+  "source": "New SBR ray-route calculation using data/processed/manhattan.pkl; not the historical 1m dataset",
+  "source_commit": "ffd4193baee7cb96a2da220473e33b1326610d11",
+  "scene_sha256": "8577ffc919c931cb934a159ed3532262b87cb6625811f5cfc5c4f5fd78acaf33",
+  "shape": [
+    40,
+    55,
+    9
+  ],
+  "spacing_m": [
+    20,
+    20,
+    10
+  ],
+  "num_rays": 20000,
+  "max_reflections": 5,
+  "frequency_hz": 28000000000.0,
+  "tx_m": [
+    -80.0,
+    80.0,
+    10.0
+  ],
+  "covered_cells": 8974,
+  "validation": {
+    "ray_in_own_rate": 1.0,
+    "stored_rate": 1.0
+  }
+}
