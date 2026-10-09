@@ -12,7 +12,7 @@ DEFAULTS = {
     "width": 1280, "height": 960,
     "elevation": 28.0, "azimuth": -60.0, "z_scale": 1.0, "zoom": 1.0,
     "dyn_range": 70.0, "vmin": None, "vmax": None,
-    "scene_opacity": 0.35, "slice_opacity": 1.0,
+    "scene_opacity": 0.35, "slice_opacity": 0.65,
     "marker_radius": 4.5, "ground_z": 0.0,
     "cmap": "turbo", "scalar_label": "Value", "coordinate_unit": "m",
     "coverage_z": None,

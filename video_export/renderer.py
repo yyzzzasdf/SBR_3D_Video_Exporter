@@ -11,7 +11,7 @@ def frame_indices(count, requested):
     return np.unique(np.linspace(0, count - 1, requested).round().astype(int))
 
 
-def slice_grid(dataset, axis, index):
+def slice_grid(dataset, axis, index, missing_value):
     x, y, z = dataset.axes
     if axis == 2:
         xx, yy = np.meshgrid(x, y, indexing="ij")
@@ -23,6 +23,9 @@ def slice_grid(dataset, axis, index):
         xx, zz = np.meshgrid(x, z, indexing="ij")
         yy = np.full(xx.shape, y[index])
     values = np.take(dataset.values, index, axis=axis).astype(float, copy=True)
+    # Missing measurements form a continuous band at the color-scale floor.
+    # Only the explicit inside mask cuts transparent holes in the slice.
+    values[~np.isfinite(values)] = missing_value
     if dataset.inside is not None:
         values[np.take(dataset.inside, index, axis=axis)] = np.nan
     grid = pv.StructuredGrid(xx, yy, zz)
@@ -89,7 +92,7 @@ def make_plotter(dataset, config, limits, top_down=False):
 
 
 def set_slice(plotter, dataset, config, limits, axis, index, coverage=False):
-    plotter.add_mesh(slice_grid(dataset, axis, index), scalars="values", cmap=config["cmap"],
+    plotter.add_mesh(slice_grid(dataset, axis, index, limits[0]), scalars="values", cmap=config["cmap"],
                      clim=limits, opacity=config["slice_opacity"], nan_opacity=0.0,
                      lighting=False, show_scalar_bar=False, name="data-slice", reset_camera=False)
     tag = "xyz"[axis]

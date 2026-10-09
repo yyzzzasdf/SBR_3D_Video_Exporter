@@ -2,13 +2,13 @@
   "input_dir": "data",
   "output_dir": "output",
   "axes": ["x", "y", "z"],
-  "fps_x": 10, "fps_y": 10, "fps_z": 3,
-  "frames_x": null, "frames_y": null, "frames_z": null,
-  "width": 1280, "height": 960,
+  "fps_x": 20, "fps_y": 20, "fps_z": 6,
+  "frames_x": 240, "frames_y": 300, "frames_z": null,
+  "width": 1920, "height": 1440,
   "elevation": 28.0, "azimuth": -60.0, "z_scale": 1.0, "zoom": 1.0,
   "dyn_range": 70.0, "vmin": null, "vmax": null,
-  "scene_opacity": 0.35, "slice_opacity": 1.0,
+  "scene_opacity": 0.35, "slice_opacity": 0.65,
   "marker_radius": 4.5, "ground_z": 0.0,
   "cmap": "turbo", "scalar_label": "Power (dBW)", "coordinate_unit": "m",
-  "coverage_z": null
+  "coverage_z": 1.5
 }
